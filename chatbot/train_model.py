@@ -37,8 +37,8 @@ model.fit(X, y)
 
 # Save model and encoders
 os.makedirs("model", exist_ok=True)
-pickle.dump(model, open("model/classifier.pkl", "wb"))
-pickle.dump(vectorizer, open("model/vectorizer.pkl", "wb"))
-pickle.dump(encoder, open("model/label_encoder.pkl", "wb"))
+pickle.dump(model, open("chatbot/model/classifier.pkl", "wb"))
+pickle.dump(vectorizer, open("chatbot/model/vectorizer.pkl", "wb"))
+pickle.dump(encoder, open("chatbot/model/label_encoder.pkl", "wb"))
 
 print("Model trained and saved.")
