@@ -1,0 +1,44 @@
+import json
+import nltk
+import numpy as np
+import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import MultinomialNB
+import pickle
+from nltk.stem import WordNetLemmatizer
+
+nltk.download('punkt')
+nltk.download('wordnet')
+
+with open('data/intents.json') as file:
+    data = json.load(file)
+
+lemmatizer = WordNetLemmatizer()
+
+corpus = []
+tags = []
+
+for intent in data['intents']:
+    for pattern in intent['patterns']:
+        tokens = nltk.word_tokenize(pattern)
+        tokens = [lemmatizer.lemmatize(w.lower()) for w in tokens]
+        corpus.append(" ".join(tokens))
+        tags.append(intent['tag'])
+
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(corpus)
+
+encoder = LabelEncoder()
+y = encoder.fit_transform(tags)
+
+model = MultinomialNB()
+model.fit(X, y)
+
+# Save model and encoders
+os.makedirs("model", exist_ok=True)
+pickle.dump(model, open("model/classifier.pkl", "wb"))
+pickle.dump(vectorizer, open("model/vectorizer.pkl", "wb"))
+pickle.dump(encoder, open("model/label_encoder.pkl", "wb"))
+
+print("Model trained and saved.")
