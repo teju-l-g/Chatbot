@@ -38,6 +38,10 @@ def get_bot_response():
     userText = request.form["msg"]
     tag, responses = predict_intent(userText)
     return random.choice(responses)  # return a random response
+import os
+
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+   port = int(os.environ.get("PORT", 10000))
+   app.run(host='0.0.0.0', port=port)
