@@ -8,12 +8,12 @@ import random  # <-- Add this at the top
 app = Flask(__name__)
 
 # Load models
-model = pickle.load(open("model/classifier.pkl", "rb"))
-vectorizer = pickle.load(open("model/vectorizer.pkl", "rb"))
-encoder = pickle.load(open("model/label_encoder.pkl", "rb"))
+model = pickle.load(open("chatbot/model/classifier.pkl", "rb"))
+vectorizer = pickle.load(open("chatbot/model/vectorizer.pkl", "rb"))
+encoder = pickle.load(open("chatbot/model/label_encoder.pkl", "rb"))
 
 # Load intents
-with open("data/intents.json") as f:
+with open("chatbot/data/intents.json") as f:
     intents = json.load(f)
 
 lemmatizer = WordNetLemmatizer()
